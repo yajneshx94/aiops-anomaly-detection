@@ -1,0 +1,24 @@
+New-Item .gitignore -ItemType File
+notepad .gitignore
+```
+
+Paste this inside and save:
+```
+# Python
+__pycache__/
+*.pyc
+*.pkl
+venv/
+.env
+
+# Data files (too large for GitHub)
+collected_data/
+*.csv
+
+# Java build
+target/
+*.class
+
+# IDE
+.idea/
+*.iml

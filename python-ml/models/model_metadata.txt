@@ -1,0 +1,31 @@
+ISOLATION FOREST MODEL METADATA
+==================================================
+
+Trained: 2026-03-02 10:57:09
+
+Config:
+  contamination = 0.05
+  n_estimators  = 100
+  max_samples   = 256
+
+Training data: 27536 normal samples
+Test data:     6885 normal samples (held out)
+
+Features (10):
+  - http_requests_total_rate_per_sec
+  - http_request_duration_seconds_sum_rate
+  - http_request_duration_seconds_count_rate
+  - avg_request_duration_sec
+  - process_cpu_seconds_total_rate_per_sec
+  - go_memstats_alloc_bytes
+  - go_memstats_heap_inuse_bytes
+  - heap_utilization_ratio
+  - go_goroutines
+  - process_open_fds
+
+Usage:
+  model  = joblib.load('models/isolation_forest.pkl')
+  scaler = joblib.load('models/scaler.pkl')
+  X_scaled = scaler.transform(X_new)
+  pred = model.predict(X_scaled)  # -1=anomaly, 1=normal
+  score = model.score_samples(X_scaled)  # lower = more anomalous
