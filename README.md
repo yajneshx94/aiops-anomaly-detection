@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Animated title using SVG -->
-<img src="https://readme-typing-svg.demolab.com?font=Space+Mono&size=32&duration=3000&pause=1000&color=00E5A0&center=true&vCenter=true&width=700&lines=Log+Anomaly+Detection+System;AIOps+%7C+Machine+Learning+%7C+Microservices;Real-time+Anomaly+Detection+%26+Response" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Space+Mono&size=32&duration=3000&pause=1000&color=00E5A0&center=true&vCenter=true&width=900&lines=Log+Anomaly+Detection+System;AIOps+%7C+ML+%7C+Microservices;Real-time+Anomaly+Detection+%26+Response" alt="Typing SVG" />
 
 <br/>
 
