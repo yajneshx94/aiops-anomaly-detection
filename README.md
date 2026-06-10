@@ -13,7 +13,7 @@
 
 <br/>
 
-> **Final Year Project** — An end-to-end AIOps pipeline that monitors a live microservice, detects anomalies using unsupervised machine learning, and produces intelligent operational recommendations in real time.
+> **An end-to-end AIOps pipeline that monitors a live microservice, detects anomalies using unsupervised machine learning, and produces intelligent operational recommendations in real time.**
 
 <br/>
 
