@@ -91,7 +91,7 @@ The system does **not** wait for a crash. It detects the statistical deviation f
 | Property | Value |
 |---|---|
 | Algorithm | Isolation Forest (unsupervised) |
-| Training samples | 34,421 normal samples (48 hours) |
+| Training samples | 56,400 normal samples (48 hours) |
 | Test samples | 5,737 anomaly samples |
 | Features | 10 runtime metrics |
 | Contamination | 0.05 (5%) |
@@ -139,7 +139,7 @@ The Java layer maps ML scores + live metric values to **5 operational actions**:
 | `SCALE` | Latency > 2000ms, goroutines < 100 | WARNING | Add replica pods |
 | `CIRCUIT_BREAKER` | Goroutines > 500 OR score < -0.65 | CRITICAL | Isolate & stop inbound traffic |
 | `RECOVERING` | Post-anomaly, < 3 clean cycles | WARNING | Hold restrictions |
-| `RESUME` | Post-anomaly, 3 consecutive clean cycles | INFO | Restore traffic at 25% |
+
 
 ### Recovery Logic
 
@@ -167,7 +167,7 @@ Data was collected from **real running Podinfo instances** over 48 hours across 
 **Person A — Normal baseline**
 - Steady traffic: `/healthz`, `/`, `/version`, `/env`
 - Interval bursts of 10–30 requests
-- Result: 34,421 samples, goroutines 9–18, near-zero latency
+- Result: 56,400 samples, goroutines 9–18, near-zero latency
 
 **Person B — Stress + Failure scenarios**
 - Stress: `/stress/cpu`, `/delay/1`, `/delay/2`, `/chunked/10240`
