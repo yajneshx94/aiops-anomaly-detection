@@ -1,290 +1,209 @@
 <div align="center">
 
-<!-- Animated title using SVG -->
-<img src="https://readme-typing-svg.demolab.com?font=Space+Mono&size=32&duration=3000&pause=1000&color=00E5A0&center=true&vCenter=true&width=900&lines=Log+Anomaly+Detection+System;AIOps+%7C+ML+%7C+Microservices;Real-time+Anomaly+Detection+%26+Response" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;size=30&amp;duration=2800&amp;pause=900&amp;color=00E5A0&amp;center=true&amp;vCenter=true&amp;width=980&amp;lines=Anomaly+Detection+%26+Monitoring%3BSpring+Boot+%2B+Python+FastAPI%3BIsolation+Forest+%7C+Runtime+Metrics" alt="Animated title: Anomaly Detection & Monitoring System" />
 
-<br/>
+  <p><strong>Runtime metric monitoring with a Python Isolation Forest prediction service and Java-based recommendations.</strong></p>
 
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Java](https://img.shields.io/badge/Java-Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Isolation%20Forest-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Podinfo-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-Metrics-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
+  <p>
+  <img src="https://img.shields.io/badge/Java-17-007396?logo=openjdk&amp;logoColor=white&amp;style=for-the-badge" alt="Java 17" />
+  <img src="https://img.shields.io/badge/Spring+Boot-3.2.x-6DB33F?logo=springboot&amp;logoColor=white&amp;style=for-the-badge" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/Python-3.x-3776AB?logo=python&amp;logoColor=white&amp;style=for-the-badge" alt="Python" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&amp;logoColor=white&amp;style=for-the-badge" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/scikit--learn-Isolation+Forest-F7931E?logo=scikitlearn&amp;logoColor=white&amp;style=for-the-badge" alt="scikit-learn" />
 
-<br/>
+  </p>
 
-> **An end-to-end AIOps pipeline that monitors a live microservice, detects anomalies using unsupervised machine learning, and produces intelligent operational recommendations in real time.**
+  <p>
+  <a href="https://github.com/yajneshx94/aiops-anomaly-detection/stargazers"><img src="https://img.shields.io/github/stars/yajneshx94/aiops-anomaly-detection?style=for-the-badge&amp;logo=github" alt="GitHub stars" /></a>
+  <a href="https://github.com/yajneshx94/aiops-anomaly-detection/network/members"><img src="https://img.shields.io/github/forks/yajneshx94/aiops-anomaly-detection?style=for-the-badge&amp;logo=github" alt="GitHub forks" /></a>
+  <a href="https://github.com/yajneshx94/aiops-anomaly-detection/commits/main/"><img src="https://img.shields.io/github/last-commit/yajneshx94/aiops-anomaly-detection?style=for-the-badge&amp;logo=git" alt="Last commit" /></a>
+  </p>
 
-<br/>
-
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" width="100%"/>
+  <a href="https://github.com/yajneshx94/aiops-anomaly-detection"><strong>View source repository →</strong></a>
 
 </div>
 
----
-
-## ⚡ What It Does
-
-```
-Every 5 seconds:
-
-  Podinfo /metrics  ──►  Feature Engineering  ──►  Isolation Forest
-        │                                                  │
-        │                                          Anomaly Score
-        │                                                  │
-        ▼                                                  ▼
-  Live Dashboard  ◄──  Java Recommendation Engine  ◄──  Predict
-        │
-        ▼
-  NORMAL / ELEVATED / ANOMALY DETECTED
-  + Specific Action: Isolate Traffic | Scale Up | Retry | Resume
-```
-
-The system does **not** wait for a crash. It detects the statistical deviation from normal behaviour **while it is developing** — giving operators time to act before failure occurs.
+<p align="center"><img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" width="100%" alt="Decorative rainbow divider" /></p>
 
 ---
 
-## 🏗️ Architecture
+A monitoring project that analyses application/runtime metrics, uses a Python machine-learning service to identify unusual metric patterns, and presents operational recommendations through a live dashboard.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Live Dashboard (HTML/JS)                  │
-│         Green ──► Yellow ──► Red  (3-colour state)          │
-└──────────────────────────┬──────────────────────────────────┘
-                           │ POST /api/anomalies/analyze
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│              Java Spring Boot Backend  :8080                 │
-│                                                             │
-│  AnomalyController  ──►  AnomalyService                    │
-│                               │                            │
-│                    ┌──────────┴──────────┐                 │
-│                    ▼                     ▼                  │
-│           ML Service call        RecommendationService      │
-│           POST /predict          (Pattern matching +        │
-│                                   Recovery tracking)        │
-└──────────────┬──────────────────────────┬───────────────────┘
-               │                          │
-               ▼                          ▼
-┌──────────────────────┐    ┌─────────────────────────────────┐
-│  Python FastAPI  :8000│    │         ActionDecision          │
-│                      │    │  severity  | CRITICAL/WARNING   │
-│  Isolation Forest    │    │  action    | CIRCUIT_BREAKER     │
-│  StandardScaler      │    │  trigger   | Goroutine explosion │
-│  contamination=0.05  │    │  guidance  | Operator steps      │
-│                      │    │  recovery  | Stabilisation watch │
-└──────────────────────┘    └─────────────────────────────────┘
-               │
-               ▼
-┌──────────────────────┐
-│  Podinfo  :9898      │
-│  (Go microservice)   │
-│  /metrics endpoint   │
-│  Prometheus format   │
-└──────────────────────┘
-```
+> **Project scope:** The model detects unusual runtime-metric patterns. Java rules generate recommendations; the application does **not** automatically execute scaling, retries, or circuit-breaker actions. Dashboard stress/failure modes simulate metric patterns rather than performing production fault injection.
 
----
+## 🧭 Contents
 
-## 🧠 The ML Model
+- [What it does](#what-it-does)
+- [Architecture](#architecture)
+- [Technology](#technology)
+- [Main endpoints](#main-endpoints)
+- [Model and features](#model-and-features)
+- [Requirements and setup](#requirements-and-setup)
+- [Training and validation](#training-and-validation)
+- [Model visualizations](#model-visualizations)
+- [Design notes and limitations](#design-notes-and-limitations)
 
-| Property | Value |
-|---|---|
-| Algorithm | Isolation Forest (unsupervised) |
-| Training samples | 56,400 normal samples (48 hours) |
-| Test samples | 5,737 anomaly samples |
-| Features | 10 runtime metrics |
-| Contamination | 0.05 (5%) |
-| **Precision** | **0.768** |
-| **Recall** | **0.944** |
-| **F1 Score** | **0.847** |
+<a id="what-it-does"></a>
+## What it does
+- Collects or simulates runtime metric values such as goroutines, open file descriptors, heap utilization, and request duration.
+- Sends feature values from the dashboard through a Spring Boot API to a Python FastAPI prediction service.
+- Uses a trained scikit-learn Isolation Forest model to return a normal/anomalous result and anomaly score.
+- Applies separate Java rule-based logic to generate recommendations such as retry, scale, or circuit breaker.
+- Displays metrics, anomaly results, recommendations, and recovery status on an HTML/CSS/JavaScript dashboard.
+- Keeps a bounded, in-memory history of recent anomaly events in the Java application.
 
-### How the score works
+**Important scope note:** this project detects unusual runtime metric patterns; it is not primarily log anomaly detection. Recommendations are displayed for operators and are not automatically executed remediation actions. Dashboard stress/failure modes simulate metric changes; they do not constitute real fault injection against a production service.
 
-```
- -1.0 ──────────┬──────────────────┬──────────── 0.0
-  CRITICAL    -0.65             -0.50           NORMAL
-               │                  │
-           Deep anomaly      Threshold
-           (CIRCUIT_BREAKER) (contamination=0.05)
+<a id="architecture"></a>
+## Architecture
+```text
+Podinfo metrics / dashboard simulation
+                 ↓
+          HTML + CSS + JS dashboard
+                 ↓
+          Spring Boot REST API
+                 ↓ HTTP POST /predict
+             Python FastAPI
+                 ↓
+       StandardScaler + Isolation Forest
+                 ↓
+      anomaly flag + score + confidence
+                 ↓
+        Java recommendation rules
+                 ↓
+       Dashboard result and history
 ```
 
-### 10 Features Used
+<a id="technology"></a>
+## Technology
+### Java service
 
-```python
-[
-  'go_goroutines',                          # Concurrent threads — primary signal
-  'process_open_fds',                       # Open file descriptors — mirrors goroutines
-  'avg_request_duration_sec',               # Request latency
-  'go_memstats_alloc_bytes',               # Allocated memory
-  'go_memstats_heap_inuse_bytes',          # Heap memory in use
-  'heap_utilization_ratio',                # heap_inuse / alloc
-  'http_requests_total_rate_per_sec',      # Request throughput
-  'http_request_duration_seconds_sum_rate',# Latency accumulation rate
-  'http_request_duration_seconds_count_rate', # Request count rate
-  'process_cpu_seconds_total_rate_per_sec' # CPU usage rate
-]
-```
+- Java 17
+- Spring Boot 3.2.x
+- Spring Web
+- Spring Boot Actuator
+- REST communication using `RestTemplate`
+- In-memory anomaly history
 
----
+### Python service
 
-## 🎯 Recommendation Engine
+- Python
+- FastAPI and Uvicorn
+- scikit-learn
+- pandas and NumPy
+- joblib
 
-The Java layer maps ML scores + live metric values to **5 operational actions**:
+### Dashboard and metrics source
 
-| Action | Trigger | Severity | Guidance |
-|---|---|---|---|
-| `NONE` | Score > -0.50, system normal | INFO | Continue monitoring |
-| `RETRY` | Score -0.50 to -0.65, moderate anomaly | WARNING | Exponential backoff retry |
-| `SCALE` | Latency > 2000ms, goroutines < 100 | WARNING | Add replica pods |
-| `CIRCUIT_BREAKER` | Goroutines > 500 OR score < -0.65 | CRITICAL | Isolate & stop inbound traffic |
-| `RECOVERING` | Post-anomaly, < 3 clean cycles | WARNING | Hold restrictions |
+- HTML, CSS, JavaScript
+- Podinfo metrics exposed through a local proxy in the reviewed setup
 
+<a id="main-endpoints"></a>
+## Main endpoints
+### Java service (default port 8080)
 
-### Recovery Logic
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `POST` | `/api/anomalies/analyze` | Submit features for analysis through the Python service |
+| `GET` | `/api/anomalies/recent` | Retrieve recent anomaly events |
+| `GET` | `/api/anomalies/history` | Retrieve event history |
+| `GET` | `/api/anomalies/stats` | Retrieve summary statistics |
+| `DELETE` | `/api/anomalies/clear` | Clear the in-memory history |
+| `GET` | `/api/health` | Java-side health information |
+| `GET` | `/api/health/ml-service` | Check ML service availability |
+| `GET` | `/api/health/status` | Combined system status |
 
-```
-Anomaly detected
-      │
-      ▼
-metrics return to normal
-      │
-      ▼
-Cycle 1 clean  →  [RECOVERING] "Hold restrictions, 2 more cycles needed"
-Cycle 2 clean  →  [RECOVERING] "Hold restrictions, 1 more cycle needed"
-Cycle 3 clean  →  [RESUME]     "Restore traffic gradually at 25% load"
-Cycle 4+       →  [NORMAL]     Full green state
-```
+### Python service (default port 8000)
 
-> One clean reading after a storm could be noise. Three consecutive clean readings (15 seconds) statistically confirms genuine recovery.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/health` | Service health |
+| `GET` | `/model/info` | Model information |
+| `POST` | `/predict` | Predict for one feature set |
+| `POST` | `/predict/batch` | Predict for a batch of feature sets |
 
----
+<a id="model-and-features"></a>
+## Model and features
+The reviewed training script uses these five stable features:
 
-## 📊 Data Collection
+- `go_goroutines`
+- `process_open_fds`
+- `heap_utilization_ratio`
+- `avg_request_duration_sec`
+- `http_request_duration_seconds_sum_rate`
 
-Data was collected from **real running Podinfo instances** over 48 hours across two machines:
+The training script uses a `StandardScaler` followed by an `IsolationForest` model. The model identifies unusual observations; it does not assign a fixed named failure category such as “CPU failure” or “HTTP 503 anomaly.” The Java service applies separate rules to derive recommendations from the prediction and selected metric values.
 
-**Person A — Normal baseline**
-- Steady traffic: `/healthz`, `/`, `/version`, `/env`
-- Interval bursts of 10–30 requests
-- Result: 56,400 samples, goroutines 9–18, near-zero latency
+<a id="requirements-and-setup"></a>
+## Requirements and setup
+- Java 17 and Maven
+- Python and pip
+- Python packages used by the service: FastAPI, Uvicorn, scikit-learn, pandas, NumPy, and joblib
+- The trained artifacts expected by `ml_service.py`, typically `python-ml/models/isolation_forest.pkl` and `python-ml/models/scaler.pkl`
+- A metrics source/proxy matching the URLs configured in `live_dashboardX4.html`
 
-**Person B — Stress + Failure scenarios**
-- Stress: `/stress/cpu`, `/delay/1`, `/delay/2`, `/chunked/10240`
-- Failure: `/status/500`, `/status/503`, `/delay/5`
-- Result: goroutines up to 1,058, latency up to 0.36s
+### 1. Start the Python prediction service
 
----
+From `python-ml`, install the required Python packages and start the app using the entry point in the repository. If launching directly with Uvicorn, the module/app target must match the file's FastAPI app variable (for example, `uvicorn ml_service:app --host 0.0.0.0 --port 8000`).
 
-## 🚀 Running the System
+Confirm the model and scaler artifacts exist before starting. The training and validation scripts also expect the corresponding processed datasets; inspect their paths before trying to retrain or validate the model.
 
-### Prerequisites
-- Docker
-- Java 17+
-- Python 3.11+
+### 2. Start the Java backend
 
-### 1. Start Podinfo
+From `java-services/monitoring-api`, run:
+
 ```bash
-docker run -d --name podinfo --rm -p 9898:9898 stefanprodan/podinfo
+mvn spring-boot:run
 ```
 
-### 2. Start Python ML Service
-```bash
-cd python-ml
-pip install -r requirements_ml_service.txt
-python ml_service.py
-```
+The reviewed configuration points to the Python service at `http://localhost:8000` and uses five-second HTTP connect/read timeouts. Check `src/main/resources/application.properties` if your host or port differs.
 
-### 3. Start Java Backend
-```bash
-cd java-services/monitoring-api
-./mvnw spring-boot:run
-```
+### 3. Start the dashboard and metrics source
 
-### 4. Serve the Dashboard
-```bash
-cd /path/to/aiops-anomaly-detection
-python -m http.server 3000
-```
+Open or serve `live_dashboardX4.html` in the supported local setup. The reviewed dashboard expects a metrics proxy at `http://localhost:3000/podinfo/metrics` and a Podinfo service reachable through that proxy. Start/configure those dependencies to match the URLs in the dashboard; the dashboard file alone does not start Podinfo or the proxy.
 
-Open `http://localhost:3000/live_dashboard.html`
+<a id="training-and-validation"></a>
+## Training and validation
+- `retrain_stable_model.py` trains a scaler and Isolation Forest from the configured normal training data and writes model artefacts/metadata.
+- `validate_model.py` loads the trained artefacts and evaluates normal and anomaly test data. It does not retrain the model.
+- Validation quality depends on the data files and label definitions used by the scripts.
 
----
+Review the paths and confirm the expected datasets/model files are available in your checkout before running these scripts.
 
-## 📁 Project Structure
+<a id="model-visualizations"></a>
+## Model visualizations
 
-```
-aiops-anomaly-detection/
-│
-├── live_dashboard.html          # Live monitoring dashboard
-│
-├── java-services/
-│   └── monitoring-api/          # Spring Boot backend
-│       └── src/main/java/
-│           ├── controller/
-│           │   └── AnomalyController.java
-│           ├── service/
-│           │   ├── AnomalyService.java
-│           │   └── RecommendationService.java   # ← Decision engine
-│           └── model/
-│               ├── AnomalyEvent.java
-│               └── ActionDecision.java
-│
-└── python-ml/
-    ├── ml_service.py            # FastAPI ML service
-    ├── validate_model.py        # Validation results
-    ├── requirements_ml_service.txt
-    └── models/
-        ├── isolation_forest.pkl # Trained model
-        ├── scaler.pkl           # StandardScaler
-        ├── model_metadata.txt
-        ├── training_results.png
-        └── validation_results.png
-```
+The repository includes the figures produced by the model training and validation scripts. They are useful for reviewing the outputs alongside the data and scripts that generated them.
 
----
+<table>
+  <tr>
+    <td align="center"><strong>Training results</strong></td>
+    <td align="center"><strong>Validation results</strong></td>
+  </tr>
+  <tr>
+    <td><img src="python-ml/models/training_results.png" alt="Training results plot" width="100%" /></td>
+    <td><img src="python-ml/models/validation_results.png" alt="Validation results plot" width="100%" /></td>
+  </tr>
+</table>
 
-## 🔬 Key Technical Decisions
-
-**Why Isolation Forest over supervised models?**
-In real production environments, labelled anomaly data is rare. You cannot label thousands of failure events before building a monitoring system. Isolation Forest learns what normal looks like from clean data alone and flags everything that deviates — no labelled examples needed.
-
-**Why Prometheus metrics over text logs?**
-Text logs require NLP parsing, are unstructured, and vary between services. Prometheus metrics are numerical, structured, and timestamped — directly consumable by ML without preprocessing. This is the same reason Google's SRE practices prioritise metrics-based observability.
-
-**Why a separate Java recommendation layer?**
-The ML model answers one question: normal or anomaly? The Java layer answers a different question: what should the operator do? These are separate concerns. The model provides the score; the recommendation engine applies domain knowledge about what each pattern means operationally.
-
----
-
-## 📈 Results
-
-```
-Normal baseline (training data):
-  go_goroutines    mean=10.28   std=0.63   max=18
-  process_open_fds mean=9.06    std=0.25   max=11
-  avg_latency      mean≈0.00045s           near zero
-
-Stress scenario (test data):
-  go_goroutines    mean=348     max=1058
-  process_open_fds mean=346     max=1055
-
-Model performance:
-  Precision  0.768   (77% of alerts are real)
-  Recall     0.944   (94% of anomalies caught)
-  F1         0.847
-```
+<a id="design-notes-and-limitations"></a>
+## Design notes and limitations
+- Java anomaly history is held in memory and is lost when the service stops; no database is used for event storage.
+- The model returns an anomaly result and score, while action recommendations are rule-based Java logic.
+- The score is a model score, not automatically a calibrated probability that a failure will occur.
+- Dashboard stress/failure modes are simulated metric patterns; they do not prove that a real service was crashed or automatically repaired.
+- The model artifacts and processed datasets need to be present at the paths expected by the code.
 
 ---
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" width="100%"/>
+  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png" width="100%" alt="Decorative rainbow divider" />
 
-**Built as a Final Year Project**
+  <p><strong>Thanks for checking out this project!</strong></p>
 
-*Demonstrating end-to-end AIOps — from raw Prometheus metrics to intelligent operational decisions*
-
-![Visitors](https://visitor-badge.laobi.icu/badge?page_id=yajneshx94.aiops-anomaly-detection)
+  <p>
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=yajneshx94.aiops-anomaly-detection&amp;left_color=24292e&amp;right_color=00E5A0&amp;left_text=Repository%20visitors" alt="Repository visitor count" />
+  </p>
 
 </div>
